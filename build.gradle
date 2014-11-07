@@ -1,0 +1,32 @@
+apply plugin: 'groovy'
+
+group = "org.stumblingoncode"
+version = "0.1"
+description = "An awesome groovy library"
+
+repositories {
+    jcenter()
+}
+
+sourceSets {
+    main.groovy.srcDir 'src'
+    test.groovy.srcDir 'test'
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.2.1'
+    testCompile 'junit:junit:4.10'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
+// code below this can be safely removed if you don't want publish library ever
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
