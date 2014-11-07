@@ -49,6 +49,5 @@ class AsyncEventBusSpec extends Specification {
 
         then:
         vars.message == personMessage
-
     }
 }
