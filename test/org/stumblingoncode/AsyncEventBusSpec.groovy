@@ -50,4 +50,28 @@ class AsyncEventBusSpec extends Specification {
         then:
         vars.message == personMessage
     }
+
+    def "this test should fail"() {
+        given: "An Async Event Bus"
+        def eventBus = new AsyncEventBus(Executors.newCachedThreadPool())
+
+        and: "A Person Message"
+        def personMessage = new PersonMessage(new Person(), PersonMessage.ACTION.CREATE)
+
+        and: "A blocking variable"
+        def vars = new BlockingVariables(2)
+
+        and: "A Fake Service"
+        def fakeService = Stub(PersonService)
+        fakeService.process >> { PersonMessage message -> vars.message = message}
+
+        and: "A subscriber"
+        def subscriber = new PersonSubscriber(eventBus, fakeService)
+
+        when:
+        eventBus.post(personMessage)
+
+        then:
+        vars.message == personMessage
+    }
 }
